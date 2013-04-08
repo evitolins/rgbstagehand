@@ -1,0 +1,151 @@
+body {
+	background: #eee;
+	font-family: helvetica, sans-serif;
+}
+
+.diagonal_lines_pattern, body {
+	background-image: -webkit-gradient(linear, left bottom, right top, color-stop(0, #eee), color-stop(0.25, #eee), color-stop(0.25, #e2e2e2), color-stop(0.5, #e2e2e2), color-stop(0.5, #eee), color-stop(0.75, #eee), color-stop(0.75, #e2e2e2));
+	background-image: -webkit-linear-gradient(left bottom, #eee 0%, #eee 25%, #e2e2e2 25%, #e2e2e2 50%, #eee 50%, #eee 75%, #e2e2e2 75%);
+	background-image: -moz-linear-gradient(left bottom, #eee 0%, #eee 25%, #e2e2e2 25%, #e2e2e2 50%, #eee 50%, #eee 75%, #e2e2e2 75%);
+	background-image: -ms-linear-gradient(left bottom, #eee 0%, #eee 25%, #e2e2e2 25%, #e2e2e2 50%, #eee 50%, #eee 75%, #e2e2e2 75%);
+	background-image: -o-linear-gradient(left bottom, #eee 0%, #eee 25%, #e2e2e2 25%, #e2e2e2 50%, #eee 50%, #eee 75%, #e2e2e2 75%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cccccc', endColorstr='#bbbbbb',GradientType=0 ); / IE6-8 */
+	background-image: linear-gradient(left bottom, #eee 0%, #eee 25%, #e2e2e2 25%, #e2e2e2 50%, #eee 50%, #eee 75%, #e2e2e2 75%);
+	background-size: 30px 30px;
+	width:100%;
+	height:100%;
+}
+
+pre {
+	font-size: 14px;
+	margin-left: 35px;
+}
+
+h1,h2,h3{
+	cursor: auto;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	height: auto;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-top: 0px;
+	outline-color: rgb(51, 51, 51);
+	outline-style: none;
+	outline-width: 0px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-top: 0px;
+	text-decoration: none;
+	vertical-align: baseline;
+	width: auto;	
+}
+
+h1 {
+	color: rgb(116, 116, 116);
+	font-size: 36px;
+	font-style: normal;
+	font-weight: bold;
+	line-height: 36px;
+	letter-spacing: -1px;
+}
+
+h2 {
+	margin-top: 10px;
+}
+
+h3 {
+	color: rgb(173, 173, 173);
+	font-size: 12px;
+	font-style: normal;
+	font-weight: normal;
+	line-height: 14px;
+	margin-left: 12px;
+}
+
+ol,ul {
+	margin: 0px;
+	padding: 0px;
+}
+
+li {
+	margin: 0px;
+	padding: 0px;
+	list-style-position: inside;
+}
+
+ul>li {
+	list-style-type: square;
+}
+
+#content, #options, #footer {
+	position: relative;
+	width: 600px;
+	margin: 20px auto;
+	padding:20px;
+}
+
+#content {
+	background-color: #fff;
+	top: 20px;
+}
+
+#footer {
+	font-size: 10px;
+	color: #888;
+}
+
+#menu {
+	position: fixed;
+	top: 0px;
+	width: 100%;
+	margin: 0px auto;
+	background: #f74;
+	z-index: 1;
+	padding: 6px 2px;
+	font-size: 11px;
+}
+
+#menu > div.menu_item {
+	float:left;
+	color: rgb(255, 204, 169);
+	margin-left:15px;
+	margin-right:15px;
+}
+
+.cmd_output {
+	padding:10px;
+	background: #efefef;
+	border-radius: 6px;
+	margin: 6px 0px;
+}
+
+.title_icon {
+	color: #f74;
+	font-size: 32px;
+	padding: 6px;
+}
+
+.stage_icon {
+	color: #f74;
+	font-size: 24px;
+	padding: 6px;
+}
+
+.branch_icon {
+	color: rgb(139, 139, 139);
+	padding: 2px;
+	font-size: 16px;
+	vertical-align: middle !important;
+}
+
+span.branch {
+	color: rgb(121, 121, 121);
+	background: rgb(228, 228, 228);;
+	padding:4px 4px;
+	border-radius: 4px;
+	font-size: 12px;
+	font-weight: normal;
+	vertical-align: middle;
+	letter-spacing: 0px;
+}

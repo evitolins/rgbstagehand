@@ -1,0 +1,26 @@
+{
+	"stages":
+	{
+		"master": "/var/www/master",
+		"sandbox1": "/var/www/sandbox1",
+		"sandbox2": "/var/www/sandbox2",
+		"sandbox3": "/var/www/sandbox3",
+		"sandbox4": "/var/www/sandbox4"
+	},
+
+	"cmds":
+	[
+		"pwd",
+		"git status --p",
+		"git status",
+		"ls -lh",
+		"du -sh"
+	],
+
+	"output":
+	[
+		"html",
+		"json",
+		"xml"
+	]
+}
