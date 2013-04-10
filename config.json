@@ -1,16 +1,67 @@
 {
 	"stages":
-	{
-		"master": "/var/www/master",
-		"sandbox1": "/var/www/sandbox1",
-		"sandbox2": "/var/www/sandbox2",
-		"sandbox3": "/var/www/sandbox3",
-		"sandbox4": "/var/www/sandbox4"
-	},
-
+	[
+		{
+			"name": "master",
+			"path" : "/var/www/master",
+			"port" : "80",
+			"cmds" : [
+				"git log --stat -2"
+			]
+		},
+		{
+			"name": "sandbox1",
+			"path" : "/var/www/sandbox1",
+			"port" : "8081",
+			"cmds" : [
+				"git log --stat -2",
+				"git checkout master",
+				"git checkout fd8f69b3464ef2c0e85f0250361801775a23bb20",
+				"ls -l",
+				"cp /var/www/master/config.php ./config.php"
+			]
+		},
+		{
+			"name": "sandbox2",
+			"path" : "/var/www/sandbox2",
+			"port" : "8082",
+			"cmds" : [
+				"git log --stat -2",
+				"git checkout master",
+				"git checkout fd8f69b3464ef2c0e85f0250361801775a23bb20",
+				"ls -l",
+				"cp /var/www/master/config.php ./config.php"
+			]
+		},
+		{
+			"name": "sandbox3",
+			"path" : "/var/www/sandbox3",
+			"port" : "8083",
+			"cmds" : [
+				"git log --stat -2",
+				"git checkout master",
+				"git checkout fd8f69b3464ef2c0e85f0250361801775a23bb20",
+				"ls -l",
+				"cp /var/www/master/config.php ./config.php"
+			]
+		},
+		{
+			"name": "sandbox4",
+			"path" : "/var/www/sandbox4",
+			"port" : "8084",
+			"cmds" : [
+				"git log --stat -2",
+				"git checkout master",
+				"git checkout fd8f69b3464ef2c0e85f0250361801775a23bb20",
+				"ls -l",
+				"cp /var/www/master/config.php ./config.php"
+			]
+		}
+	],
 	"cmds":
 	[
 		"pwd",
+		"whoami",
 		"git status --p",
 		"git status",
 		"ls -lh",
