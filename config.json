@@ -6,7 +6,12 @@
 			"path" : "/var/www/master",
 			"port" : "80",
 			"cmds" : [
-				"git log --stat -2"
+				"git log --stat -1",
+				"cat /etc/apache2/sites-available/default",
+				"git checkout master",
+				"git checkout fd8f69b3464ef2c0e85f0250361801775a23bb20",
+				"ls -l",
+				"cp /var/www/master/config.php ./config.php"
 			]
 		},
 		{
@@ -14,7 +19,8 @@
 			"path" : "/var/www/sandbox1",
 			"port" : "8081",
 			"cmds" : [
-				"git log --stat -2",
+				"git log --stat -1",
+				"cat /etc/apache2/sites-available/sandbox1",
 				"git checkout master",
 				"git checkout fd8f69b3464ef2c0e85f0250361801775a23bb20",
 				"ls -l",
@@ -26,7 +32,8 @@
 			"path" : "/var/www/sandbox2",
 			"port" : "8082",
 			"cmds" : [
-				"git log --stat -2",
+				"git log --stat -1",
+				"cat /etc/apache2/sites-available/sandbox2",
 				"git checkout master",
 				"git checkout fd8f69b3464ef2c0e85f0250361801775a23bb20",
 				"ls -l",
@@ -38,7 +45,8 @@
 			"path" : "/var/www/sandbox3",
 			"port" : "8083",
 			"cmds" : [
-				"git log --stat -2",
+				"git log --stat -1",
+				"cat /etc/apache2/sites-available/sandbox3",
 				"git checkout master",
 				"git checkout fd8f69b3464ef2c0e85f0250361801775a23bb20",
 				"ls -l",
@@ -50,7 +58,8 @@
 			"path" : "/var/www/sandbox4",
 			"port" : "8084",
 			"cmds" : [
-				"git log --stat -2",
+				"git log --stat -1",
+				"cat /etc/apache2/sites-available/sandbox4",
 				"git checkout master",
 				"git checkout fd8f69b3464ef2c0e85f0250361801775a23bb20",
 				"ls -l",
@@ -62,12 +71,41 @@
 	[
 		"pwd",
 		"whoami",
+		"ls -lh",
+		"ls -lha",
+		"du -sh",
+		"git branch -a",
 		"git status --p",
 		"git status",
-		"ls -lh",
-		"du -sh"
+		"git log --graph"
 	],
-
+	"alerts":
+	[
+		{
+			"description" : "Git: Display Current Branch",
+			"cmd_test" : "",
+			"cmd_data" : "git branch",
+			"label" : "",
+			"icon" : "icon-github-sign",
+			"color" : "#faa"
+		},
+		{
+			"description" : "Git: Alert Detached Head",
+			"cmd_test" : "git status --p",
+			"cmd_data" : "cat .git/HEAD",
+			"label" : "HEAD Detached: ",
+			"icon" : "icon-bell",
+			"color" : "#afa"
+		},
+		{
+			"description" : "Git: Alert Local Changes",
+			"cmd_test" : "git symbolic-ref -q HEAD",
+			"cmd_data" : "",
+			"label" : "Local Changes",
+			"icon" : "icon-exclamation-sign",
+			"color" : "#aaf"
+		}
+	],
 	"output":
 	[
 		"html",

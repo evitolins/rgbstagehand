@@ -12,14 +12,15 @@ body {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cccccc', endColorstr='#bbbbbb',GradientType=0 ); / IE6-8 */
 	background-image: linear-gradient(left bottom, #eee 0%, #eee 25%, #e2e2e2 25%, #e2e2e2 50%, #eee 50%, #eee 75%, #e2e2e2 75%);
 	background-size: 30px 30px;
-	width:100%;
-	height:100%;
+	width: 100%;
+	height: 100%;
 }
 
 pre {
 	font-size: 14px;
 	margin-left: 35px;
 	white-space: pre;
+	border: none;
 }
 
 h1,h2,h3{
@@ -79,6 +80,23 @@ ul>li {
 	list-style-type: square;
 }
 
+select {
+	background: rgb(209, 100, 0);
+	width: 150px;
+	border: 1px none #AAA;
+	padding: 1px 4px;
+	font-size: 17px;
+	color: #fff;
+	-webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    cursor: pointer;
+}
+
+select:hover {
+	background: #9B4A00;
+}
+
 #content, #options, #footer, #menu {
 	position: relative;
 	min-width: 480px;
@@ -112,7 +130,7 @@ ul>li {
 	height: 44px;
 	margin: 0px auto;
 	font-size: 11px;
-	padding: 5px 0px;
+	padding: 5px 10px;
 	overflow: hidden;
 }
 
@@ -128,6 +146,22 @@ ul>li {
 	margin-left:15px;
 	margin-right:15px;
 }
+
+/*#menu > div.menu_item:after {
+	border: solid rgba(0, 0, 0, 0);
+	content: ' ';
+	height: 0;
+	position: absolute;
+	width: 0;
+	top: 0px;
+	border-width: 6px;
+	border-top-color: #AA5100;
+	top: 8px;
+	left: 130px;
+	z-index: 100;
+	pointer-events: none;
+}
+*/
 
 #content {
 	background-color: #fff;
@@ -164,9 +198,10 @@ ul>li {
 }
 
 .title_icon {
-	color: #f74;
+	color: rgb(209, 100, 0);
 	font-size: 32px;
-	padding: 6px;
+	padding: 0px;
+	margin-left: 5px;
 }
 
 .stage_icon {
@@ -191,20 +226,19 @@ ul>li {
 	vertical-align: middle !important;
 }
 
-.http_icon {
+.quick_icon {
 	color: rgb(139, 139, 139);
 	padding: 2px;
-	font-size: 24px;
+	font-size: 18px;
 	vertical-align: middle !important;
 	cursor: pointer;
 }
 
-.http_icon:hover {
+.quick_icon:hover {
 	color: #f74;
 }
 
-span.branch, span.detachedHead {
-
+.tag {
 	padding:4px 4px;
 	border-radius: 4px;
 	font-size: 12px;
@@ -212,13 +246,21 @@ span.branch, span.detachedHead {
 	vertical-align: middle;
 	letter-spacing: 0px;
 	margin-left:4px;
+	white-space: nowrap;
+	cursor: default;	
 }
 
 span.branch {
 	color: rgb(121, 121, 121);
-	background: rgb(228, 228, 228);;
+	background: rgb(228, 228, 228);
 }
+
+span.localChanges {
+	color: rgb(121, 121, 121);
+	background: #FFEE98;
+}
+
 span.detachedHead {
 	color: rgb(151, 121, 121);
-	background: rgb(255, 228, 228);;
+	background: rgb(255, 228, 228);
 }

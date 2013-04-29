@@ -45,20 +45,42 @@
 */
 
 // Config Data
-$json = file_get_contents( "config.json") ; 
-$config = json_decode( $json, true ); 
-$stages = $config["stages"];
-$cmds = $config["cmds"];
-$outputs = $config["output"];
+$json     = file_get_contents( "config.json") ; 
+$config   = json_decode( $json, true ); 
+$stages   = $config["stages"];
+$cmds     = $config["cmds"];
+$alerts   = $config["alerts"];
+$outputs  = $config["output"];
 
 // Server Data (maybe this be hardcoded within config.json?)
-$baseUrl = explode( ":" , $_SERVER['HTTP_HOST'] );
-$address = $baseUrl[0];
+$baseUrl  = explode( ":" , $_SERVER['HTTP_HOST'] );
+$address  = $baseUrl[0];
 
 // User Input
-$stage = $_GET['stage'];
-$cmd = $_GET['cmd'];
-$output = $_GET['output'];
+$stage    = $_GET['stage'];
+$cmd      = $_GET['cmd'];
+$output   = $_GET['output'];
+
+$stgCmds = $stages[$stage]['cmds'];
+
+// Cmd Scope Logic
+$cmdSplit = explode( ":", $cmd );
+$cmd_scope = "";
+$cmd_idx = "";
+// Batch-able Cmd
+//  If the command does not contain a ":", then assume a Batch Command.
+if (isset( $cmd ) && count( $cmdSplit ) == 1 ) {
+	$cmd_idx = $cmd;
+	$cmd_scope = "batch";
+	$cmd_current = $cmds[$cmd];
+}
+// Scene-Specific Cmd
+//  If the command contains a ":", then assume it is Scene-Specfic Command.
+elseif (isset( $cmd ) && count( $cmdSplit ) == 2 ) {
+	$cmd_idx = $cmdSplit[1];
+	$cmd_scope = "stage";
+	$cmd_current = $stages[$stage]['cmds'][$cmdSplit[1]];
+}
 
 // Build Output Array
 $r = array();
@@ -68,32 +90,15 @@ foreach ( $stages as $k => $v ) {
 		continue;
 	}
 
-	// We add a ":" to differentiate a "stage-specific command" from a "batch command" 
-	$cmdSplit = explode( ":", $cmd );
-	$shell_return = "";
-	$shell_cmd = "";
-
-	// Batch-able Cmd
-	//  If the command contains a ":", then assume it is Scene-Specfic and skip.
-	if (isset( $cmd ) && count( $cmdSplit ) == 1 ) {
-		$shell_cmd = $cmds[$cmd];
-	}
-
-	// Scene-Specific Cmd
-	//  If the command contains a ":", then assume it is Scene-Specfic and skip.
-	elseif (isset( $cmd ) && count( $cmdSplit ) == 2 ) {
-		$shell_cmd = $stages[$stage]['cmds'][$cmdSplit[1]];
-	}
-
 	// Gather Data
 	chdir ( $v['path'] );
 	$data = array();
-	$data['stage'] = $v['name'];
-	$data['path'] = $v['path'];
-	$data['port'] = $v['port'];
-	$data['cmd'] = $cmds[$cmd];
+	$data['stage']  = $v['name'];
+	$data['path']   = $v['path'];
+	$data['port']   = $v['port'];
+	$data['cmd']    = $cmds[$cmd];
 	$data['branch'] = shell_exec( "git branch");
-	$data['status'] = shell_exec( $shell_cmd . " 2>&1"); //str_error merged
+	$data['status'] = shell_exec( $cmd_current . " 2>&1"); //str_error merged
 
 	//Record Data
 	array_push($r, $data);
@@ -133,9 +138,13 @@ if ( $outputs[$output] == "xml" ) {
 				<div id="menu">
 					<h1 id="title">
 						<span style="color:#D16400;">rgb</span>Stagehand
-						<i class="icon-sitemap title_icon" style="color: rgb(209, 100, 0); font-size: 32px; padding: 0px; margin-left: 5px;"></i>
+						<i class="icon-sitemap title_icon"></i>
 					</h1>
-
+ <?
+                    //////////
+					// Menu //
+					//////////
+ ?>
 					<div class="menu_item">
 						output: <select onChange="window.location.href = addParameter(window.location.href, 'output', value);">
 						<?
@@ -149,23 +158,19 @@ if ( $outputs[$output] == "xml" ) {
 
 					<div class="menu_item">
 						cmd: <select onChange="window.location.href = addParameter(window.location.href, 'cmd', value);">
-						<option value=""></option>
+						<option value="">clear</option>
 						<?
 						// List Commands
 						echo "<optgroup label='Batch Options'>";
-						foreach ( $cmds as $k => $v ) {
-							echo "<option " . ($k == $cmd && $cmd != "" ? "SELECTED" : "")  . " value='" . $k . "'>" . $v . "</option>";
+						foreach ( $cmds as $k => $v ) {					
+							echo "<option " . ($k == $cmd_idx && $cmd_idx != "" && $cmd_scope == "batch" ? "SELECTED" : "")  . " value='" . $k . "'>" . $v . "</option>";
 						}
 						echo "</optgroup>";
-						?>
-						
-						<?
 						// List Stage-Specific Commands, if appropriate
 						if ( (isset( $stage ) && $stage != "") ) {
-							$stgCmds = $stages[$stage]['cmds'];
 							echo "<optgroup label='Stage-Specific Options'>";
 							foreach ( $stgCmds as $k => $v ) {
-								echo "<option value='" . $stage .":". $k . "'>" . $v . "</option>";
+								echo "<option " . ($k == $cmd_idx && $cmd_idx != "" && $cmd_scope == "stage" ? "SELECTED" : "")  . " value='" . $stage .":". $k . "'>" . $v . "</option>";
 							}
 							echo "</optgroup>";
 						}
@@ -198,50 +203,65 @@ if ( $outputs[$output] == "xml" ) {
 						continue;
 					}
 
-					// Set Environment Location
+					// Set Environment Location (ALL cmds and alerts should run from this path)
 					chdir ( $v['path'] );
 
-					// Display branch data
-					$branch = shell_exec( "git branch");
-					echo "<h2><i class='icon-hdd stage_icon'></i><span class='stage_title' onClick=\"window.location.href = addParameter(window.location.href, 'stage', " . $k .");\">\"" . $v['name'] . "\"</span> ";
-					if ( $branch != "" ) {
-						echo "<span class='branch'><i class='icon-github-sign branch_icon'></i>" . $branch  . "</span>";
-						// Detect "detached HEAD"
-						//  If nothing is returned, assume that the head is detached
-						if ( shell_exec( "git symbolic-ref -q HEAD") == "" ) {
-							echo "<span class='detachedHead'><i class='icon-exclamation-sign branch_icon'></i>HEAD Detached</span>";
-						};					
-					}
-					echo "<span style='float:right;'>
-						<i class='icon-home http_icon' onClick=\"window.open('http://" . $address . ":" . $v['port'] . "');\"></i>
-					</span>";
+					// Run Cmds and Alerts			
+					$shell_return = shell_exec( $cmd_current . " 2>&1"); //str_error merged
+
+					// Display stage data
+					echo "<h2>";
+
+						// Display Title
+						echo "<i class='icon-hdd stage_icon'></i><span class='stage_title' onClick=\"window.location.href = addParameter(window.location.href, 'stage', " . $k .");\">\"" . $v['name'] . "\"</span> ";
+
+	                    ////////////
+						// Alerts //
+						////////////
+						// Git Alerts, only if a branch exists						
+						$gitExists = shell_exec( "[ -d .git ] && echo 'true'");
+						if ( $gitExists != "" ) {
+							$branch = shell_exec( "git branch");
+							if ( $branch != "" ) {
+								// Display Branch Data
+								echo "<span class='branch tag'><i class='icon-github-sign branch_icon'></i>" . $branch  . "</span>";
+							}
+
+							// Alert local changes
+							$local_changes = shell_exec( "git status --p");
+							if ( $local_changes != "" ) {
+								echo "<span class='localChanges tag'><i class='icon-bell branch_icon'></i>Local Changes</span>";
+							}
+
+							// Detect "detached HEAD"
+							//  If nothing is returned, assume that the head is detached
+							$attached_head = shell_exec( "git symbolic-ref -q HEAD");
+							if ( $attached_head == "" ) {
+								$head = shell_exec( "cat .git/HEAD");
+								echo "<span class='detachedHead tag'><i class='icon-exclamation-sign branch_icon'></i>HEAD Detached: " . $head . "</span>";
+							}
+						} else {
+							// Git Not Found
+							echo "<span class='detachedHead tag'><i class='icon-github-sign branch_icon'></i>.git not found</span>";							
+						}
+
+	                    ///////////////////
+						// Quick Buttons //
+						///////////////////
+						// Link to Stage's homepage
+						echo "<span style='float:right;'>
+							<i class='icon-globe quick_icon' onClick=\"window.open('http://" . $address . ":" . $v['port'] . "');\"></i>
+						</span>";
+
 					echo "</h2>";
 
-					// We add a ":" to differentiate a "stage-specific command" from a "batch command" 
-					$cmdSplit = explode( ":", $cmd );
-					$shell_return = "";
-					$shell_cmd = "";
-
-					// Batch-able Cmd
-					//  If the command contains a ":", then assume it is Scene-Specfic and skip.
-					if (isset( $cmd ) && count( $cmdSplit ) == 1 ) {
-						$shell_cmd = $cmds[$cmd];
-					}
-
-					// Scene-Specific Cmd
-					//  If the command contains a ":", then assume it is Scene-Specfic and skip.
-					else if (isset( $cmd ) && count( $cmdSplit ) == 2 ) {
-						$shell_cmd = $stages[$stage]['cmds'][$cmdSplit[1]];
-					}
-
-					// Run Cmd
-					$shell_return = shell_exec( $shell_cmd . " 2>&1"); //str_error merged
-
-					// Display Cmd Output
+                    ////////////
+					// Output //
+					////////////
 					if ($shell_return != "") {
 						echo "<div class='cmd_output_light'>";
-						echo "<h3>" . $shell_cmd . "</h3>";
-						echo "<pre style='border:none;'>" . htmlspecialchars($shell_return) . "</pre>";
+						echo "<h3>" . $cmd_current . "</h3>";
+						echo "<pre>" . htmlspecialchars($shell_return) . "</pre>";
 						echo "</div>";
 					}
 				}
@@ -254,4 +274,3 @@ if ( $outputs[$output] == "xml" ) {
 		<script type="text/javascript" src="/js/stagehand.js"></script>
 	</body>
 </html>
-
