@@ -132,9 +132,9 @@ if ( $outputs[$output] == "xml" ) {
 		<!-- For Modern Browsers with PNG Support -->
 		<link rel="icon" type="image/png" href="img/favicon.png">
 		<!-- Apple 	Favicon without reflective shine -->
-		<link rel=”apple-touch-icon-precomposed” sizes=”114×114″ href=”img/apple-touch-icon-114×114-precomposed.png” />
-		<link rel=”apple-touch-icon-precomposed” sizes=”72×72″ href=”img/apple-touch-icon-72×72-precomposed.png” />
-		<link rel=”apple-touch-icon-precomposed” href=”img/apple-touch-icon-57x57-precomposed” />
+		<link rel="apple-touch-icon-precomposed" sizes="114×114" href="img/apple-touch-icon-114×114-precomposed.png">
+		<link rel="apple-touch-icon-precomposed" sizes="72×72" href="img/apple-touch-icon-72×72-precomposed.png">
+		<link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-57x57-precomposed">
 
 	    <link rel="stylesheet" href="css/normalize.css">
 	    <link rel="stylesheet" href="css/stagehand.css">
