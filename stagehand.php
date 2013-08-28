@@ -44,6 +44,8 @@
 *
 */
 
+require 'utils.php';
+
 // Config Data
 $json     = file_get_contents( "config.json") ; 
 $config   = json_decode( $json, true ); 
@@ -240,6 +242,14 @@ if ( $outputs[$output] == "xml" ) {
 								$head = shell_exec( "cat .git/HEAD");
 								echo "<span class='detachedHead tag'><i class='icon-exclamation-sign branch_icon'></i>HEAD Detached: " . $head . "</span>";
 							}
+							
+							// Display last push/fetch
+							//  If nothing is returned, assume that the head is detached
+							$last_fetch = shell_exec( "stat -c %Y .git/FETCH_HEAD");
+							if ( $last_fetch != "" ) {
+								echo "<span class='tag'>Last pull/fetch " . prettyDateEpoch($last_fetch) . "</span>";
+							}
+
 						} else {
 							// Git Not Found
 							echo "<span class='detachedHead tag'><i class='icon-github-sign branch_icon'></i>.git not found</span>";							
