@@ -76,7 +76,9 @@
     "git status --p",
     "git status",
     "git log --graph",
-    "git remote show origin"
+    "git remote show origin",
+    "git rev-list HEAD...origin/master --count",
+    "git config --get remote.origin.url"
   ],
   "alerts": [
     {
