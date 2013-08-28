@@ -13,6 +13,19 @@
         "cp /var/www/master/config.php ./config.php"
       ]
     },
+     {
+      "name": "deploy",
+      "path": "/var/www/deploy",
+      "port": "8080",
+      "cmds": [
+        "git log --stat -1",
+        "cat /etc/apache2/sites-available/sandbox1",
+        "git checkout master",
+        "git checkout fd8f69b3464ef2c0e85f0250361801775a23bb20",
+        "ls -l",
+        "cp /var/www/master/config.php ./config.php"
+      ]
+    },
     {
       "name": "sandbox1",
       "path": "/var/www/sandbox1",
