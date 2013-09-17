@@ -127,6 +127,10 @@ if ( $outputs[$output] == "xml" ) {
 	<head>
 	    <meta charset="utf-8">
 	    <title>Stagehand</title>
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <!-- Bootstrap -->
+	    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
 		<!-- For IE -->
 		<!--[if IE]><link rel="shortcut icon" href="img/favicon.ico"><![endif]-->
 		<!-- For Modern Browsers with PNG Support -->
@@ -201,9 +205,16 @@ if ( $outputs[$output] == "xml" ) {
 						?>
 						</select>
 					</div>
-
-
 				</div>
+
+				<div id="submenu_container">
+					<div id="submenu">
+					  <button href="#" class="btn btn-mini"><i class="icon-plus"></i> Add New Stage</button>
+					  <button href="#" class="btn btn-mini"><i class="icon-list"></i> AutoDeploy Logs</button>
+					  <button href="#" class="btn btn-mini"><i class="icon-briefcase"></i> Server Status</button>
+					</div>
+				</div>
+
 			</div>
 			<div id="content">
 				<?
@@ -224,7 +235,9 @@ if ( $outputs[$output] == "xml" ) {
 					echo "<h2>";
 
 						// Display Title
-						echo "<i class='icon-hdd stage_icon'></i><span class='stage_title' onClick=\"window.location.href = addParameter(window.location.href, 'stage', " . $k .");\">\"" . $v['name'] . "\"</span> ";
+						echo "<i class='icon-hdd stage_icon'></i><span class='stage_title' onClick=\"window.location.href = addParameter(window.location.href, 'stage', " . $k .");\"> " . $v['name'] . "</span> <i class='icon-globe quick_icon' onClick=\"window.open('http://" . $address . ":" . $v['port'] . "');\"></i>";
+
+						echo "<div class='alerts' style='float:right;'>";
 
 	                    ////////////
 						// Alerts //
@@ -264,12 +277,14 @@ if ( $outputs[$output] == "xml" ) {
 							echo "<span class='detachedHead tag'><i class='icon-github-sign branch_icon'></i>.git not found</span>";							
 						}
 
+						echo "</div>";
+
 	                    ///////////////////
 						// Quick Buttons //
 						///////////////////
 						// Link to Stage's homepage
 						echo "<span style='float:right;'>
-							<i class='icon-globe quick_icon' onClick=\"window.open('http://" . $address . ":" . $v['port'] . "');\"></i>
+							
 						</span>";
 
 					echo "</h2>";
@@ -289,7 +304,11 @@ if ( $outputs[$output] == "xml" ) {
 			<div id="footer">
 				<span>view <a href="/config.json">config.json</a></span>
 			</div>
+			<div style="position: fixed; top: 0px; bottom: 0px; right: 0px; width: 400px; height: 100%; border: none;">
+				<iframe src="serverStatus/" style="position: absolute; top: 0px; bottom: 0px; right: 0px; width: 100%; height: 100%; border: none;"></iframe>
+			</div>
 		</div>
-		<script type="text/javascript" src="/js/stagehand.js"></script>
+    	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>		
+		<script type="text/javascript" src="js/stagehand.js"></script>
 	</body>
 </html>

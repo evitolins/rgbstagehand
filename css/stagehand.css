@@ -16,6 +16,10 @@ body {
 	height: 100%;
 }
 
+iframe {
+	border:0 none;
+}
+
 pre {
 	font-size: 14px;
 	margin-left: 35px;
@@ -54,6 +58,7 @@ h1 {
 
 h2 {
 	margin-top: 10px;
+	font-size: 20pt;
 }
 
 h3 {
@@ -97,10 +102,14 @@ select:hover {
 	background: #9B4A00;
 }
 
-#content, #options, #footer, #menu {
+pre {
+	background: none;
+}
+
+
+#content, #options, #footer, #menu, #submenu {
 	position: relative;
 	min-width: 480px;
-	max-width: 960px;
 }
 
 #content, #options, #footer {
@@ -118,6 +127,8 @@ select:hover {
 }
 
 #title {
+	position:absolute;
+	top:12px;
 	color: #fff;
 	font-size: 36px;
 	float: left;
@@ -130,7 +141,7 @@ select:hover {
 	height: 44px;
 	margin: 0px auto;
 	font-size: 11px;
-	padding: 5px 10px;
+	padding: 5px 20px;
 	overflow: hidden;
 }
 
@@ -139,12 +150,11 @@ select:hover {
 }
 
 #menu > div.menu_item {
-	float:right;
+	float: right;
 	position: relative;
-	top: 13px;
-	color: rgb(255, 204, 169);
-	margin-left:15px;
-	margin-right:15px;
+	top: 8px;
+	color: #FFCCA9;
+	margin-left: 15px;
 }
 
 /*#menu > div.menu_item:after {
@@ -163,9 +173,29 @@ select:hover {
 }
 */
 
+#submenu_container {
+	top: 40px;
+	width: 100%;
+	background: #FF5C00;
+	height: 31px;
+	left: 0px;
+	right: 0px;
+	margin: 0 auto;
+	display: none;
+}
+
+#submenu {
+	margin: 0 auto;
+	color: #FFB896;
+	position: relative;
+	top: 0px;
+	text-align:right;
+}
+
 #content {
 	background-color: #fff;
 	top: 20px;
+	margin-right: 400px;
 }
 
 #footer {
@@ -206,8 +236,6 @@ select:hover {
 
 .stage_icon {
 	color: #f74;
-	font-size: 24px;
-	padding: 6px;
 }
 
 .stage_title {
