@@ -305,7 +305,7 @@ if ( $outputs[$output] == "xml" ) {
 				<span>view <a href="/config.json">config.json</a></span>
 			</div>
 			<div style="position: fixed; top: 50px; bottom: 0px; right: 0px; width: 400px; border: none;">
-				<iframe src="serverStatus/" style="position: absolute; top: 0px; bottom: 0px; right: 0px; width: 100%; height: 100%; border: none;"></iframe>
+				<iframe src="../status/" style="position: absolute; top: 0px; bottom: 0px; right: 0px; width: 100%; height: 100%; border: none;"></iframe>
 			</div>
 		</div>
     	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>		
