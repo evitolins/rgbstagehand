@@ -177,25 +177,25 @@ if ( $outputs[$output] == "xml" ) {
                 </div>
             </div>
             <div id="content">
-            <h2>    
-                <i class='icon-hdd stage_icon'></i>
-                <span class='stage_title' onClick="window.location.href = addParameter(window.location.href, 'stage', );">{{stage_title}}</span>
-                <span class='branch tag'><i class='icon-github-sign branch_icon'></i></span>
-                <span class='localChanges tag'><i class='icon-bell branch_icon'></i>Local Changes</span>
-                <span class='detachedHead tag'><i class='icon-exclamation-sign branch_icon'></i>HEAD Detached: </span>
-                <span class='tag'>Last pull/fetch </span>
-                <span class='detachedHead tag'><i class='icon-github-sign branch_icon'></i>.git not found</span>                            
-                <span style='float:right;'><i class='icon-globe quick_icon' onClick="window.open('http://:');"></i></span>
-            </h2>
-            <div class='cmd_output_light'>
-            <h3></h3>
-            <pre></pre>
-            </div>
+                <h2>    
+                    <i class='icon-hdd stage_icon'></i>
+                    <span class='stage_title' onClick="window.location.href = addParameter(window.location.href, 'stage', );">{{stage_title}}</span>
+                    <span class='branch tag'><i class='icon-github-sign branch_icon'></i></span>
+                    <span class='localChanges tag'><i class='icon-bell branch_icon'></i>Local Changes</span>
+                    <span class='detachedHead tag'><i class='icon-exclamation-sign branch_icon'></i>HEAD Detached: </span>
+                    <span class='tag'>Last pull/fetch </span>
+                    <span class='detachedHead tag'><i class='icon-github-sign branch_icon'></i>.git not found</span>                            
+                    <span style='float:right;'><i class='icon-globe quick_icon' onClick="window.open('http://:');"></i></span>
+                </h2>
+                <div class='cmd_output_light'>
+                    <h3></h3>
+                    <pre></pre>
+                </div>
             </div>
             <div id="footer">
                 <span>view <a href="/config.json">config.json</a></span>
             </div>
-            <iframe style="position:absolute; top: 0px; bottom: 0px; left:0px; width:300px;" src="serverStatus/">
+            <iframe style="position:absolute; top: 0px">
             </iframe>
         </div>
         <script type="text/javascript" src="/js/stagehand.js"></script>
