@@ -235,7 +235,7 @@ if ( $outputs[$output] == "xml" ) {
 					echo "<h2>";
 
 						// Display Title
-						echo "<i class='icon-hdd stage_icon'></i><span class='stage_title' onClick=\"window.location.href = addParameter(window.location.href, 'stage', " . $k .");\"> " . $v['name'] . "</span> <i class='icon-globe quick_icon' onClick=\"window.open('http://" . $address . ":" . $v['port'] . "');\"></i>";
+						echo "<i class='icon-folder-close stage_icon'></i><span class='stage_title' onClick=\"window.location.href = addParameter(window.location.href, 'stage', " . $k .");\"> " . $v['name'] . "</span> <i class='icon-globe quick_icon' onClick=\"window.open('http://" . $address . ":" . $v['port'] . "');\"></i>";
 
 						echo "<div class='alerts' style='float:right;'>";
 
@@ -246,9 +246,10 @@ if ( $outputs[$output] == "xml" ) {
 						$gitExists = shell_exec( "[ -d .git ] && echo 'true'");
 						if ( $gitExists != "" ) {
 							$branch = shell_exec( "git branch");
+							$shaAbbrev = shell_exec( "git rev-list -n1 --abbrev-commit HEAD" );
 							if ( $branch != "" ) {
 								// Display Branch Data
-								echo "<span class='branch tag'><i class='icon-github-sign branch_icon'></i>" . $branch  . "</span>";
+								echo "<span class='branch tag'><i class='icon-code-fork branch_icon'></i>" . $branch  . " : " . $shaAbbrev . "</span>";
 							}
 
 							// Alert local changes
@@ -274,7 +275,7 @@ if ( $outputs[$output] == "xml" ) {
 
 						} else {
 							// Git Not Found
-							echo "<span class='detachedHead tag'><i class='icon-github-sign branch_icon'></i>.git not found</span>";							
+							echo "<span class='detachedHead tag'>.git not found</span>";							
 						}
 
 						echo "</div>";
@@ -302,7 +303,7 @@ if ( $outputs[$output] == "xml" ) {
 				?>
 			</div>
 			<div id="footer">
-				<span>view <a href="/config.json">config.json</a></span>
+				<span>view <a href="config.json">config.json</a></span>
 			</div>
 			<div style="position: fixed; top: 50px; bottom: 0px; right: 0px; width: 400px; border: none;">
 				<iframe src="../status/" style="position: absolute; top: 0px; bottom: 0px; right: 0px; width: 100%; height: 100%; border: none;"></iframe>
