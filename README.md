@@ -6,10 +6,22 @@ Stagehand
 A simple UI for viewing & manipulating remote staging servers.
 
 
+**WORK IN PROGRESS**
+
+
 How it Works
 ------------
-Stagehand is meant to be run from a remote staging server. It provides
-a simple json config file to establish views of existing staging areas.
+Stagehand runs preset bash commands.  When used with care, these commands can 
+be used in several ways to provide server feedback, issue batch services, or 
+update a git repository.  It provides all of this, while allowing multiple
+staging areas to both view and manipulate at once.
+
+Stagehand was built to be run using Apache's VirtualHosts, each staging area 
+assigned a different port.  A simple json config file is used to establish 
+staging area views, and both stage specific and global commands.
+
+Git repositories are recognized, and certain info about their status will be
+displayed in the UI if detected within each stage's path.
 
 Simply add a name, path, port and a list of commands for each staging
 area within the 'config.json' file.
@@ -17,18 +29,26 @@ area within the 'config.json' file.
 	"stages":
 		[
 			{
-				"name": "master",
-				"path" : "/var/www/master",
+				"name": "beta",
+				"path" : "/var/www/beta",
 				"port" : "80",
+				"cmds" : [
+					"git fetch"
+				]
+			},
+			{
+				"name": "Bob's Sandbox",
+				"path" : "/var/www/sandbox_8080",
+				"port" : "8080",
 				"cmds" : [
 					"git log --stat -1"
 				]
-			},
+			},			
 			...
 
 
-Stage Details
--------------
+Stages
+------
 ### Name
 Name is used simply for display purposes
 
@@ -68,8 +88,8 @@ the test and to display it's returned data ''if the "cmd_test" is not defined.
 (Nesting alerts will come later, to streamline the feature.)
 
 
-Cmd Details
------------
+Cmds
+----
 ### Batch
 Batch cmds that can be run on all staging servers at once. It's typical 
 for most batch commands to be simple, helpful queries.
