@@ -245,7 +245,7 @@ if ( $outputs[$output] == "xml" ) {
 						// Git Alerts, only if a branch exists						
 						$gitExists = shell_exec( "[ -d .git ] && echo 'true'");
 						if ( $gitExists != "" ) {
-							$branch = shell_exec( "git branch");
+							$branch = shell_exec( "git rev-parse --abbrev-ref HEAD");
 							$shaAbbrev = shell_exec( "git rev-list -n1 --abbrev-commit HEAD" );
 							if ( $branch != "" ) {
 								// Display Branch Data
