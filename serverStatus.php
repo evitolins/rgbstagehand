@@ -7,7 +7,7 @@ $system = array(
 $installed = array(
     "linux" => `uname -a`,
     "git" => `git --version`,
-    "apache" => `apache2 -V`,
+    "apache" => `apache2 -v`,
     "php" => `php --version`,
     "mysql" => `mysql --version`,
     "linux" => `uname -a`,
@@ -15,7 +15,7 @@ $installed = array(
     );
 
 ?>
-
+<link rel="stylesheet" type="text/css" href="./css/stagehand.css">
 <h2>System</h2>
 <pre>
 <? print_r($system); ?>
