@@ -92,6 +92,10 @@ foreach ( $stages as $k => $v ) {
 		continue;
 	}
 
+	if (!is_dir ( $v['path'])) {
+		continue;
+	}
+
 	// Gather Data
 	chdir ( $v['path'] );
 	$data = array();
@@ -222,6 +226,10 @@ if ( $outputs[$output] == "xml" ) {
 				foreach ( $stages as $k => $v ) {
 					// Skip unneeded stage
 					if ( isset( $stage ) && $stage != $k && $stage != "") {
+						continue;
+					}
+
+					if (!is_dir ( $v['path'])) {
 						continue;
 					}
 
