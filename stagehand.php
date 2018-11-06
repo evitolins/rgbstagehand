@@ -156,7 +156,7 @@ if ( $outputs[$output] == "xml" ) {
 			<div id="header">
 				<div id="menu">
 					<h1 id="title">
-						<span style="color:#D16400;">rgb</span>Stagehand
+						Stagehand
 						<i class="icon-sitemap title_icon"></i>
 					</h1>
  <?
