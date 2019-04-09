@@ -262,12 +262,6 @@ if ( $outputs[$output] == "xml" ) {
 
 							// Display last push/fetch
 							//  If nothing is returned, assume that the head is detached
-							if ( $describe != "" ) {
-								echo "<span class='tag'>" . $describe . "</span>";
-							}
-
-							// Display last push/fetch
-							//  If nothing is returned, assume that the head is detached
 							if ( $last_fetch != "" ) {
 								echo "<span class='tag'>Last pull/fetch " . prettyDateEpoch($last_fetch) . "</span>";
 							}
@@ -288,9 +282,9 @@ if ( $outputs[$output] == "xml" ) {
 								echo "<span class='detachedHead tag'><i class='icon-warning-sign branch_icon'></i>HEAD Detached: " . $describe . "</span>";
 							}
 
-							if ( $shaAbbrev != "" && $attached_head != "" ) {
+							if ( $shaAbbrev != "" ) {
 								// Display Branch Data
-								echo "<span class='branch tag'>" . $shaAbbrev  . "</span>";
+								echo "<span class='branch tag' style='margin-left: 2em;'>" . $shaAbbrev  . "</span>";
 							}
 
 						} else {
