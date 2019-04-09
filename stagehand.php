@@ -241,7 +241,7 @@ if ( $outputs[$output] == "xml" ) {
 					echo "<h2>";
 
 						// Display Title
-						echo "<i class='icon-folder-close stage_icon'></i><span class='stage_title' onClick=\"window.location.href = addParameter(window.location.href, 'stage', " . $k .");\"> " . $v['name'] . "</span> <i class='icon-globe quick_icon' onClick=\"window.open('http://" . $address . ":" . $v['port'] . "');\"></i> <span>" . $shaAbbrev . "</span>";
+						echo "<i class='icon-folder-close stage_icon'></i><span class='stage_title' onClick=\"window.location.href = addParameter(window.location.href, 'stage', " . $k .");\"> " . $v['name'] . "</span> <i class='icon-globe quick_icon' onClick=\"window.open('http://" . $address . ":" . $v['port'] . "');\"></i>";
 
 						echo "<div class='alerts' style='float:right;'>";
 
