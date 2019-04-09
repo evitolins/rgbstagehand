@@ -48,7 +48,8 @@ require 'utils.php';
 
 // Config Data
 $json     = file_get_contents( "config.json") ; 
-$config   = json_decode( $json, true ); 
+$config   = json_decode( $json, true );
+$options  = $config["options"];
 $stages   = $config["stages"];
 $cmds     = $config["cmds"];
 $alerts   = $config["alerts"];
@@ -131,7 +132,7 @@ if ( $outputs[$output] == "xml" ) {
 <html lang="en">
 	<head>
 	    <meta charset="utf-8">
-	    <title>Stagehand</title>
+	    <title>Stagehand<?php if (!empty($options['subtitle'])) { echo " - ".$options['subtitle']; } ?></title>
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	    <!-- Bootstrap -->
 	    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
@@ -159,6 +160,7 @@ if ( $outputs[$output] == "xml" ) {
 					<h1 id="title">
 						Stagehand
 						<i class="icon-sitemap title_icon"></i>
+						<?php if (!empty($options['subtitle'])) { echo $options['subtitle']; } ?>
 					</h1>
  <?
                     //////////
@@ -242,7 +244,7 @@ if ( $outputs[$output] == "xml" ) {
 					echo "<h2>";
 
 						// Display Title
-						echo "<i class='icon-folder-close stage_icon'></i><span class='stage_title' onClick=\"window.location.href = addParameter(window.location.href, 'stage', " . $k .");\"> " . $v['name'] . "</span> <a href='https://" . $v['domain'] . ":" . $v['port'] . "'><i class='icon-globe quick_icon'></i></a>";
+						echo "<i class='icon-folder-close stage_icon'></i><span class='stage_title' onClick=\"window.location.href = addParameter(window.location.href, 'stage', " . $k .");\"> " . $v['name'] . "</span> <a class='web_link' href='https://" . $v['domain'] . ":" . $v['port'] . "'><i class='icon-globe quick_icon'></i></a>";
 
 						echo "<div class='alerts' style='float:right;'>";
 
