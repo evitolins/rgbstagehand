@@ -101,6 +101,7 @@ foreach ( $stages as $k => $v ) {
 	$data = array();
 	$data['stage']  = $v['name'];
 	$data['path']   = $v['path'];
+	$data['domain'] = $v['domain'];
 	$data['port']   = $v['port'];
 	$data['cmd']    = $cmds[$cmd];
 	$data['branch'] = shell_exec( "git branch");
@@ -241,7 +242,7 @@ if ( $outputs[$output] == "xml" ) {
 					echo "<h2>";
 
 						// Display Title
-						echo "<i class='icon-folder-close stage_icon'></i><span class='stage_title' onClick=\"window.location.href = addParameter(window.location.href, 'stage', " . $k .");\"> " . $v['name'] . "</span> <i class='icon-globe quick_icon' onClick=\"window.open('http://" . $address . ":" . $v['port'] . "');\"></i>";
+						echo "<i class='icon-folder-close stage_icon'></i><span class='stage_title' onClick=\"window.location.href = addParameter(window.location.href, 'stage', " . $k .");\"> " . $v['name'] . "</span> <a href='https://" . $v['domain'] . ":" . $v['port'] . "'><i class='icon-globe quick_icon'></i></a>";
 
 						echo "<div class='alerts' style='float:right;'>";
 
