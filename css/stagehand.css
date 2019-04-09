@@ -288,7 +288,7 @@ span.localChanges {
 	background: #FFEE98;
 }
 
-span.detachedHead {
-	color: rgb(151, 121, 121);
-	background: rgb(255, 228, 228);
+span.detachedHead, span.detachedHead i {
+    color: rgb(175, 125, 70);
+    background: rgb(255, 212, 163);
 }

@@ -255,28 +255,28 @@ if ( $outputs[$output] == "xml" ) {
 						if ( $gitExists != "" ) {
 							$branch = shell_exec( "git rev-parse --abbrev-ref HEAD");
 							$shaAbbrev = shell_exec( "git rev-list -n1 --abbrev-commit HEAD" );
-							if ( $branch != "" ) {
+							$attached_head = shell_exec( "git symbolic-ref -q HEAD");
+							$local_changes = shell_exec( "git status --p");
+							$last_fetch = shell_exec( "stat -c %Y .git/FETCH_HEAD");
+
+							if ( $branch != "" && $attached_head != "" ) {
 								// Display Branch Data
 								echo "<span class='branch tag'><i class='icon-code-fork branch_icon'></i>" . $branch  . " : " . $shaAbbrev . "</span>";
 							}
 
-							// Alert local changes
-							$local_changes = shell_exec( "git status --p");
-							if ( $local_changes != "" ) {
-								echo "<span class='localChanges tag'><i class='icon-bell branch_icon'></i>Local Changes</span>";
-							}
-
 							// Detect "detached HEAD"
 							//  If nothing is returned, assume that the head is detached
-							$attached_head = shell_exec( "git symbolic-ref -q HEAD");
-							if ( $attached_head == "" ) {
-								$head = shell_exec( "cat .git/HEAD");
-								echo "<span class='detachedHead tag'><i class='icon-exclamation-sign branch_icon'></i>HEAD Detached: " . $head . "</span>";
+							else if ( $attached_head == "" ) {
+								echo "<span class='detachedHead tag'><i class='icon-warning-sign branch_icon'></i>HEAD Detached: " . $shaAbbrev . "</span>";
+							}
+
+							// Alert local changes
+							if ( $local_changes != "" ) {
+								echo "<span class='localChanges tag'><i class='icon-bell branch_icon'></i>Local Changes</span>";
 							}
 							
 							// Display last push/fetch
 							//  If nothing is returned, assume that the head is detached
-							$last_fetch = shell_exec( "stat -c %Y .git/FETCH_HEAD");
 							if ( $last_fetch != "" ) {
 								echo "<span class='tag'>Last pull/fetch " . prettyDateEpoch($last_fetch) . "</span>";
 							}
