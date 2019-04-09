@@ -253,11 +253,29 @@ if ( $outputs[$output] == "xml" ) {
 						// Git Alerts, only if a branch exists						
 						$gitExists = shell_exec( "[ -d .git ] && echo 'true'");
 						if ( $gitExists != "" ) {
+							$describe = shell_exec( "git describe");
 							$branch = shell_exec( "git rev-parse --abbrev-ref HEAD");
 							$shaAbbrev = shell_exec( "git rev-list -n1 --abbrev-commit HEAD" );
 							$attached_head = shell_exec( "git symbolic-ref -q HEAD");
 							$local_changes = shell_exec( "git status --p");
 							$last_fetch = shell_exec( "stat -c %Y .git/FETCH_HEAD");
+
+							// Display last push/fetch
+							//  If nothing is returned, assume that the head is detached
+							if ( $describe != "" ) {
+								echo "<span class='tag'>" . $describe . "</span>";
+							}
+
+							// Display last push/fetch
+							//  If nothing is returned, assume that the head is detached
+							if ( $last_fetch != "" ) {
+								echo "<span class='tag'>Last pull/fetch " . prettyDateEpoch($last_fetch) . "</span>";
+							}
+
+							// Alert local changes
+							if ( $local_changes != "" ) {
+								echo "<span class='localChanges tag'><i class='icon-bell branch_icon'></i>Local Changes</span>";
+							}
 
 							if ( $branch != "" && $attached_head != "" ) {
 								// Display Branch Data
@@ -268,17 +286,6 @@ if ( $outputs[$output] == "xml" ) {
 							//  If nothing is returned, assume that the head is detached
 							else if ( $attached_head == "" ) {
 								echo "<span class='detachedHead tag'><i class='icon-warning-sign branch_icon'></i>HEAD Detached: " . $shaAbbrev . "</span>";
-							}
-
-							// Alert local changes
-							if ( $local_changes != "" ) {
-								echo "<span class='localChanges tag'><i class='icon-bell branch_icon'></i>Local Changes</span>";
-							}
-							
-							// Display last push/fetch
-							//  If nothing is returned, assume that the head is detached
-							if ( $last_fetch != "" ) {
-								echo "<span class='tag'>Last pull/fetch " . prettyDateEpoch($last_fetch) . "</span>";
 							}
 
 						} else {
