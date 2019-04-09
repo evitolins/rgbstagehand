@@ -236,23 +236,12 @@ if ( $outputs[$output] == "xml" ) {
 					// Set Environment Location (ALL cmds and alerts should run from this path)
 					chdir ( $v['path'] );
 
-					// Run Cmds and Alerts			
-					$shell_return = shell_exec( $cmd_current . " 2>&1"); //str_error merged
-					$gitExists = shell_exec( "[ -d .git ] && echo 'true'");
-					if ( $gitExists != "" ) {
-						$describe = shell_exec( "git describe");
-						$branch = shell_exec( "git rev-parse --abbrev-ref HEAD");
-						$shaAbbrev = shell_exec( "git rev-list -n1 --abbrev-commit HEAD" );
-						$attached_head = shell_exec( "git symbolic-ref -q HEAD");
-						$local_changes = shell_exec( "git status --p");
-						$last_fetch = shell_exec( "stat -c %Y .git/FETCH_HEAD");
-					}
 
 					// Display stage data
 					echo "<h2>";
 
 						// Display Title
-						echo "<i class='icon-folder-close stage_icon'></i><span class='stage_title' onClick=\"window.location.href = addParameter(window.location.href, 'stage', " . $k .");\"> " . $v['name'] . "</span> <i class='icon-globe quick_icon' onClick=\"window.open('http://" . $address . ":" . $v['port'] . "');\"></i> <span>" . $describe . "</span>";
+						echo "<i class='icon-folder-close stage_icon'></i><span class='stage_title' onClick=\"window.location.href = addParameter(window.location.href, 'stage', " . $k .");\"> " . $v['name'] . "</span> <i class='icon-globe quick_icon' onClick=\"window.open('http://" . $address . ":" . $v['port'] . "');\"></i> <span>" . $shaAbbrev . "</span>";
 
 						echo "<div class='alerts' style='float:right;'>";
 
@@ -260,7 +249,17 @@ if ( $outputs[$output] == "xml" ) {
 						// Alerts //
 						////////////
 						// Git Alerts, only if a branch exists						
+						$shell_return = shell_exec( $cmd_current . " 2>&1"); //str_error merged
+						$gitExists = shell_exec( "[ -d .git ] && echo 'true'");
 						if ( $gitExists != "" ) {
+							// Run Cmds and Alerts			
+							$describe = shell_exec( "git describe");
+							$branch = shell_exec( "git rev-parse --abbrev-ref HEAD");
+							$shaAbbrev = shell_exec( "git rev-list -n1 --abbrev-commit HEAD" );
+							$attached_head = shell_exec( "git symbolic-ref -q HEAD");
+							$local_changes = shell_exec( "git status --p");
+							$last_fetch = shell_exec( "stat -c %Y .git/FETCH_HEAD");
+
 							// Display last push/fetch
 							//  If nothing is returned, assume that the head is detached
 							if ( $describe != "" ) {
@@ -280,13 +279,18 @@ if ( $outputs[$output] == "xml" ) {
 
 							if ( $branch != "" && $attached_head != "" ) {
 								// Display Branch Data
-								echo "<span class='branch tag'><i class='icon-code-fork branch_icon'></i>" . $branch  . " : " . $shaAbbrev . "</span>";
+								echo "<span class='branch tag'><i class='icon-code-fork branch_icon'></i>" . $branch  . "</span>";
 							}
 
 							// Detect "detached HEAD"
 							//  If nothing is returned, assume that the head is detached
 							else if ( $attached_head == "" ) {
-								echo "<span class='detachedHead tag'><i class='icon-warning-sign branch_icon'></i>HEAD Detached: " . $shaAbbrev . "</span>";
+								echo "<span class='detachedHead tag'><i class='icon-warning-sign branch_icon'></i>HEAD Detached: " . $describe . "</span>";
+							}
+
+							if ( $shaAbbrev != "" && $attached_head != "" ) {
+								// Display Branch Data
+								echo "<span class='branch tag'>" . $shaAbbrev  . "</span>";
 							}
 
 						} else {
