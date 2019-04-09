@@ -284,7 +284,7 @@ if ( $outputs[$output] == "xml" ) {
 
 							if ( $shaAbbrev != "" ) {
 								// Display Branch Data
-								echo "<span class='branch tag' style='margin-left: 2em;'>" . $shaAbbrev  . "</span>";
+								echo "<span class='commit_hash tag'>" . $shaAbbrev  . "</span>";
 							}
 
 						} else {

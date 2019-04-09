@@ -296,6 +296,12 @@ pre {
 	cursor: default;	
 }
 
+span.commit_hash {
+	margin-left: 1em;
+    font-family: monospace;
+    font-size: 0.6em;
+}
+
 span.branch {
 	color: rgb(121, 121, 121);
 	background: rgb(228, 228, 228);
