@@ -279,7 +279,7 @@ if ( $outputs[$output] == "xml" ) {
 							// Detect "detached HEAD"
 							//  If nothing is returned, assume that the head is detached
 							else if ( $attached_head == "" ) {
-								echo "<span class='detachedHead tag'><i class='icon-warning-sign branch_icon'></i>HEAD Detached: " . $describe . "</span>";
+								echo "<span class='localChanges tag'><i class='icon-bell branch_icon'></i>HEAD detached at " . $describe . "</span>";
 							}
 
 							if ( $shaAbbrev != "" ) {
