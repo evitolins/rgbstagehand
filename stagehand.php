@@ -158,9 +158,9 @@ if ( $outputs[$output] == "xml" ) {
 			<div id="header">
 				<div id="menu">
 					<h1 id="title">
-						Stagehand
+						<span>Stagehand</span>
 						<i class="icon-sitemap title_icon"></i>
-						<?php if (!empty($options['subtitle'])) { echo $options['subtitle']; } ?>
+						<span><?php if (!empty($options['subtitle'])) { echo $options['subtitle']; } ?></span>
 					</h1>
  <?
                     //////////
