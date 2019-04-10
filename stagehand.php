@@ -247,7 +247,7 @@ if ( $outputs[$output] == "xml" ) {
 
 						if (!empty($v['domain'])) {
 							$web_link = "https://" . $v['domain'];
-							$web_link .= (!empty($v['port'])) ? ":" . $v['port'];
+							$web_link .= (!empty($v['port'])) ? ":" . $v['port'] : "";
 							echo " <a class='web_link' href='".$web_link."'><i class='icon-globe quick_icon'></i></a>";						
 						}
 
