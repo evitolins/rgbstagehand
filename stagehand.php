@@ -239,12 +239,17 @@ if ( $outputs[$output] == "xml" ) {
 					// Set Environment Location (ALL cmds and alerts should run from this path)
 					chdir ( $v['path'] );
 
-
 					// Display stage data
 					echo "<h2>";
 
 						// Display Title
-						echo "<i class='icon-folder-close stage_icon'></i><span class='stage_title' onClick=\"window.location.href = addParameter(window.location.href, 'stage', " . $k .");\"> " . $v['name'] . "</span> <a class='web_link' href='https://" . $v['domain'] . ":" . $v['port'] . "'><i class='icon-globe quick_icon'></i></a>";
+						echo "<i class='icon-folder-close stage_icon'></i><span class='stage_title' onClick=\"window.location.href = addParameter(window.location.href, 'stage', " . $k .");\"> " . $v['name'] . "</span>";
+
+						if (!empty($v['domain'])) {
+							$web_link = "https://" . $v['domain'];
+							$web_link .= (!empty($v['port'])) ? ":" . $v['port'];
+							echo " <a class='web_link' href='".$web_link."'><i class='icon-globe quick_icon'></i></a>";						
+						}
 
 						echo "<div class='alerts' style='float:right;'>";
 
