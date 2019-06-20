@@ -63,6 +63,7 @@ $address  = $baseUrl[0];
 $stage    = $_GET['stage'];
 $cmd      = $_GET['cmd'];
 $output   = $_GET['output'];
+$stage_split = explode(',', $stage);
 
 $stgCmds = $stages[$stage]['cmds'];
 
@@ -87,9 +88,9 @@ elseif (isset( $cmd ) && count( $cmdSplit ) == 2 ) {
 
 // Build Output Array
 $r = array();
-foreach ( $stages as $k => $v ) {
-	// Skip unneeded stage
-	if ( isset( $stage ) && $stage != $k && $stage != "") {
+	foreach ( $stages as $k => $v ) {
+		// Skip unneeded stage
+		if ( isset( $stage ) && !in_array((string) $k, $stage_split) && $stage != "") {
 		continue;
 	}
 
@@ -228,7 +229,7 @@ if ( $outputs[$output] == "xml" ) {
 				// List Stage(s) , perform Command and return Output
 				foreach ( $stages as $k => $v ) {
 					// Skip unneeded stage
-					if ( isset( $stage ) && $stage != $k && $stage != "") {
+					if ( isset( $stage ) && !in_array((string) $k, $stage_split) && $stage != "") {
 						continue;
 					}
 
